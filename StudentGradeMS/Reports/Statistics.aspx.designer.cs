@@ -4,8 +4,8 @@
     {
         protected global::System.Web.UI.WebControls.Button btnReload;
         protected global::System.Web.UI.WebControls.Panel pnlStats;
-        protected global::System.Web.UI.WebControls.GridView gvCourseAvg;
-        protected global::System.Web.UI.WebControls.GridView gvStudentRank;
-        protected global::System.Web.UI.WebControls.GridView gvScoreDist;
+        protected global::System.Web.UI.WebControls.GridView gvSubjectStats;
+        protected global::System.Web.UI.WebControls.GridView gvRank;
+        protected global::System.Web.UI.WebControls.GridView gvDist;
     }
 }

@@ -8,23 +8,22 @@ namespace StudentGradeMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                LoadStatistics();
-            }
+            if (!IsPostBack) LoadStats();
         }
 
-        private void LoadStatistics()
+        private void LoadStats()
         {
-            DataTable studentDt = DBHelper.ExecuteQuery("SELECT COUNT(*) AS Cnt FROM Students");
-            DataTable courseDt = DBHelper.ExecuteQuery("SELECT COUNT(*) AS Cnt FROM Courses");
-            DataTable gradeDt = DBHelper.ExecuteQuery("SELECT COUNT(*) AS Cnt FROM Grades");
-            DataTable avgDt = DBHelper.ExecuteQuery("SELECT ISNULL(AVG(Score),0) AS AvgScore FROM Grades");
+            DataTable cnt = DBHelper.ExecuteQuery("SELECT COUNT(*) AS Cnt FROM Exam");
+            DataTable avg = DBHelper.ExecuteQuery("SELECT ISNULL(AVG((Chinese+Math+English+Computer)/4.0),0) AS AvgTotal FROM Exam");
+            DataTable maxAvg = DBHelper.ExecuteQuery("SELECT ISNULL(MAX((Chinese+Math+English+Computer)/4.0),0) AS MaxAvg FROM Exam");
+            DataTable pass = DBHelper.ExecuteQuery("SELECT COUNT(*) AS Cnt FROM Exam WHERE Chinese>=60 AND Math>=60 AND English>=60 AND Computer>=60");
 
-            lblStudentCount.Text = studentDt.Rows[0]["Cnt"].ToString();
-            lblCourseCount.Text = courseDt.Rows[0]["Cnt"].ToString();
-            lblGradeCount.Text = gradeDt.Rows[0]["Cnt"].ToString();
-            lblAvgScore.Text = decimal.Parse(avgDt.Rows[0]["AvgScore"].ToString()).ToString("F1");
+            lblStudentCount.Text = cnt.Rows[0]["Cnt"].ToString();
+            lblAvgScore.Text = decimal.Parse(avg.Rows[0]["AvgTotal"].ToString()).ToString("F1");
+            lblMaxAvg.Text = decimal.Parse(maxAvg.Rows[0]["MaxAvg"].ToString()).ToString("F1");
+            lblPassCount.Text = pass.Rows[0]["Cnt"].ToString();
+            lblPassRate.Text = cnt.Rows[0]["Cnt"].ToString() == "0" ? "0" :
+                (int.Parse(pass.Rows[0]["Cnt"].ToString()) * 100.0 / int.Parse(cnt.Rows[0]["Cnt"].ToString())).ToString("F1");
         }
     }
 }

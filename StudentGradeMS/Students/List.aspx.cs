@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
 using StudentGradeMS.App_Code;
 
 namespace StudentGradeMS.Students
@@ -8,50 +9,38 @@ namespace StudentGradeMS.Students
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                BindGrid();
-            }
+            if (!IsPostBack) BindGrid();
         }
 
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            BindGrid();
-        }
+        protected void btnSearch_Click(object sender, EventArgs e) => BindGrid();
 
         private void BindGrid()
         {
             string keyword = txtSearch.Text.Trim();
-            string sql = "SELECT * FROM Students WHERE 1=1";
+            string sql = "SELECT * FROM Exam WHERE 1=1";
             if (!string.IsNullOrEmpty(keyword))
-            {
-                sql += " AND (StudentNo LIKE @keyword OR Name LIKE @keyword)";
-            }
-            sql += " ORDER BY Id DESC";
+                sql += " AND (StudentNo LIKE @kw OR Sname LIKE @kw)";
+            sql += " ORDER BY StudentNo";
 
-            var param = new System.Data.SqlClient.SqlParameter("@keyword", "%" + keyword + "%");
-            DataTable dt = string.IsNullOrEmpty(keyword) 
-                ? DBHelper.ExecuteQuery(sql) 
-                : DBHelper.ExecuteQuery(sql, param);
+            var param = string.IsNullOrEmpty(keyword) ? null
+                : new SqlParameter[] { new SqlParameter("@kw", "%" + keyword + "%") };
 
-            gvStudents.DataSource = dt;
+            gvStudents.DataSource = DBHelper.ExecuteQuery(sql, param ?? new SqlParameter[0]);
             gvStudents.DataBind();
         }
 
         protected void gvStudents_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
         {
-            int id = Convert.ToInt32(gvStudents.DataKeys[e.RowIndex].Value);
-            DBHelper.ExecuteNonQuery("DELETE FROM Students WHERE Id=@Id",
-                new System.Data.SqlClient.SqlParameter("@Id", id));
+            string sno = gvStudents.Rows[e.RowIndex].Cells[0].Text;
+            DBHelper.ExecuteNonQuery("DELETE FROM Exam WHERE StudentNo=@sno",
+                new SqlParameter("@sno", sno));
             BindGrid();
         }
 
         protected void gvStudents_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
         {
             if (e.CommandName == "EditStudent")
-            {
-                Response.Redirect("Edit.aspx?id=" + e.CommandArgument);
-            }
+                Response.Redirect("Edit.aspx?sno=" + Server.UrlEncode(e.CommandArgument.ToString()));
         }
     }
 }

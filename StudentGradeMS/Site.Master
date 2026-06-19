@@ -12,27 +12,20 @@
         <div class="container">
             <div class="header">
                 <h1>学生成绩管理系统</h1>
-                <div class="user-info">
-                    <asp:Label ID="lblWelcome" runat="server" Text="欢迎使用成绩管理系统"></asp:Label>
-                </div>
+                <div class="user-info"><asp:Label ID="lblWelcome" runat="server" Text="WebDBStudents.Exam"></asp:Label></div>
             </div>
             <div class="navbar">
                 <ul>
                     <li><a href="~/Default.aspx">首页</a></li>
-                    <li><a href="~/Students/List.aspx">学生管理</a></li>
-                    <li><a href="~/Courses/List.aspx">课程管理</a></li>
-                    <li><a href="~/Grades/Enter.aspx">成绩录入</a></li>
-                    <li><a href="~/Grades/View.aspx">成绩查看</a></li>
+                    <li><a href="~/Students/List.aspx">成绩总表</a></li>
+                    <li><a href="~/Students/Add.aspx">新增记录</a></li>
                     <li><a href="~/Reports/Statistics.aspx">统计分析</a></li>
                 </ul>
             </div>
             <div class="main-content">
-                <asp:ContentPlaceHolder ID="MainContent" runat="server">
-                </asp:ContentPlaceHolder>
+                <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
             </div>
-            <div class="footer">
-                <p>&copy; 2026 - 学生成绩管理系统</p>
-            </div>
+            <div class="footer"><p>&copy; 2026 - 学生成绩管理系统</p></div>
         </div>
     </form>
 </body>

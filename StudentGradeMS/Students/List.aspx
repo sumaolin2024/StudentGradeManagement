@@ -12,26 +12,25 @@
         <a href="Add.aspx" class="btn btn-success">新增学生</a>
     </div>
     <asp:GridView ID="gvStudents" runat="server" CssClass="grid-table" AutoGenerateColumns="False"
-        DataKeyNames="Id" OnRowDeleting="gvStudents_RowDeleting" OnRowCommand="gvStudents_RowCommand">
+        OnRowDeleting="gvStudents_RowDeleting" OnRowCommand="gvStudents_RowCommand">
         <Columns>
             <asp:BoundField DataField="StudentNo" HeaderText="学号" />
-            <asp:BoundField DataField="Name" HeaderText="姓名" />
-            <asp:BoundField DataField="Gender" HeaderText="性别" />
-            <asp:BoundField DataField="Age" HeaderText="年龄" />
-            <asp:BoundField DataField="ClassName" HeaderText="班级" />
-            <asp:BoundField DataField="Phone" HeaderText="电话" />
+            <asp:BoundField DataField="Sname" HeaderText="姓名" />
+            <asp:BoundField DataField="Class" HeaderText="班级" />
+            <asp:BoundField DataField="Chinese" HeaderText="语文" />
+            <asp:BoundField DataField="Math" HeaderText="数学" />
+            <asp:BoundField DataField="English" HeaderText="英语" />
+            <asp:BoundField DataField="Computer" HeaderText="计算机" />
             <asp:TemplateField HeaderText="操作">
                 <ItemTemplate>
-                    <asp:LinkButton ID="lnkEdit" runat="server" CommandName="EditStudent" CommandArgument='<%# Eval("Id") %>'
+                    <asp:LinkButton ID="lnkEdit" runat="server" CommandName="EditStudent" CommandArgument='<%# Eval("StudentNo") %>'
                         CssClass="btn btn-primary" Text="编辑" style="padding:4px 10px;font-size:12px;" />
-                    <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete" 
+                    <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete"
                         CssClass="btn btn-danger" Text="删除" style="padding:4px 10px;font-size:12px;"
                         OnClientClick="return confirm('确定要删除该学生吗？');" />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
-        <EmptyDataTemplate>
-            <div class="empty-data">暂无学生数据</div>
-        </EmptyDataTemplate>
+        <EmptyDataTemplate><div class="empty-data">暂无学生数据</div></EmptyDataTemplate>
     </asp:GridView>
 </asp:Content>
